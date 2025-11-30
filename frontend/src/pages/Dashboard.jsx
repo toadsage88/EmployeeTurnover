@@ -67,7 +67,7 @@ function Dashboard() {
       <div className="max-w-6xl mx-auto px-4 py-10 w-full">
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 md:p-8">
           <h2 className="text-2xl font-bold text-center mb-2 text-slate-900">
-            Employee Churn Predictor
+            Employee Turnover Prediction
           </h2>
           <p className="text-center text-slate-500 mb-8 text-sm md:text-base">
             Enter employee details below to predict the likelihood of them
@@ -303,3 +303,4 @@ function SelectField({ label, help, options, ...props }) {
 }
 
 export default Dashboard;
+
