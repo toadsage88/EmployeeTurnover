@@ -1,16 +1,17 @@
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
 import axios from "axios";
 
 const BACKEND_URL = "https://employee-turnover-backend.onrender.com/predict";
 
 function Dashboard() {
   const navigate = useNavigate();
-React.useEffect(() => {
-  if (!localStorage.getItem("authToken")) {
-    navigate("/login");
-  }
-}, []);
+
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const [formData, setFormData] = useState({
     satisfaction_level: "",
@@ -172,4 +173,3 @@ function InputField({ label, ...props }) {
 }
 
 export default Dashboard;
-
