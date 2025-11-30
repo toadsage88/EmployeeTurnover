@@ -40,20 +40,45 @@ function Layout() {
             <span>Employee Churn Portal</span>
           </div>
           <nav className="flex items-center gap-6 text-sm font-medium">
-            <NavLink to="/" className={({ isActive }) => (isActive ? "underline underline-offset-4" : "hover:opacity-80")} end>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive ? "underline underline-offset-4" : "hover:opacity-80"
+              }
+              end
+            >
               Home
             </NavLink>
-            <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "underline underline-offset-4" : "hover:opacity-80")}>
-              Dashboard
-            </NavLink>
-            <NavLink to="/about" className={({ isActive }) => (isActive ? "underline underline-offset-4" : "hover:opacity-80")}>
+
+            {isLoggedIn && (
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4"
+                    : "hover:opacity-80"
+                }
+              >
+                Dashboard
+              </NavLink>
+            )}
+
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                isActive ? "underline underline-offset-4" : "hover:opacity-80"
+              }
+            >
               About
             </NavLink>
 
             {!isLoggedIn ? (
-              <NavLink to="/login" className={({ isActive }) =>
-                isActive ? "underline underline-offset-4" : "hover:opacity-80"
-              }>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive ? "underline underline-offset-4" : "hover:opacity-80"
+                }
+              >
                 Login
               </NavLink>
             ) : (
@@ -61,7 +86,7 @@ function Layout() {
                 onClick={handleLogout}
                 className="ml-2 px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-xs"
               >
-                Logout ({username})
+                Logout {username && `(${username})`}
               </button>
             )}
           </nav>
@@ -90,4 +115,3 @@ function Layout() {
 }
 
 export default App;
-
