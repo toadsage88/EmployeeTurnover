@@ -37,7 +37,7 @@ function Layout() {
       <header className="bg-blue-600 text-white shadow-md">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2 font-semibold">
-            <span className="text-xl">👥</span>
+            <img src="/logo.svg" alt="Logo" className="w-7 h-7" />
             <span>Employee Turnover Prediction </span>
           </div>
           <nav className="flex items-center gap-6 text-sm font-medium">
