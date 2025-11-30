@@ -38,7 +38,7 @@ function Layout() {
         <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2 font-semibold">
             <span className="text-xl">👥</span>
-            <span>Employee Churn Portal</span>
+            <span>Employee Turnover Prediction System</span>
           </div>
           <nav className="flex items-center gap-6 text-sm font-medium">
             <NavLink
@@ -121,7 +121,7 @@ function Layout() {
       {/* FOOTER */}
       <footer className="bg-white border-t border-slate-200">
         <div className="max-w-6xl mx-auto px-4 py-4 text-xs text-slate-500 flex justify-between">
-          <span>© {new Date().getFullYear()} Employee Churn Portal</span>
+          <span>© {new Date().getFullYear()} Employee Turnover Predictin System</span>
           <span>Built by Himanshu Vyas</span>
         </div>
       </footer>
