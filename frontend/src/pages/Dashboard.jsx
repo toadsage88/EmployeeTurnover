@@ -7,8 +7,10 @@ const BACKEND_URL = "https://employee-turnover-backend.onrender.com/predict";
 function Dashboard() {
   const navigate = useNavigate();
 
+  // 🔒 Redirect to login if no token
   useEffect(() => {
-    if (!localStorage.getItem("authToken")) {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
       navigate("/login");
     }
   }, [navigate]);
