@@ -1,5 +1,6 @@
 // src/pages/Home.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   const scrollToFeatures = () => {
@@ -26,12 +27,12 @@ function Home() {
               you take proactive retention measures.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a
-                href="/dashboard"
+              <Link
+                to="/dashboard"
                 className="px-5 py-2.5 rounded-full bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition"
               >
                 Try Prediction
-              </a>
+              </Link>
               <button
                 onClick={scrollToFeatures}
                 className="px-5 py-2.5 rounded-full border border-slate-300 text-slate-800 font-semibold bg-white hover:bg-slate-50 transition"
@@ -113,3 +114,4 @@ function FeatureCard({ icon, title, text }) {
 }
 
 export default Home;
+
