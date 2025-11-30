@@ -37,11 +37,9 @@ function Login() {
       <div className="max-w-md mx-auto w-full px-4 py-10">
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 md:p-8">
           <h2 className="text-2xl font-bold text-center mb-2 text-slate-900">
-            Login to Employee Churn Portal
+            Login 
           </h2>
-          <p className="text-center text-slate-500 mb-6 text-sm">
-            Use the demo account <b>admin / admin123</b>
-          </p>
+         
 
           <form onSubmit={handleSubmit} className="space-y-4 text-sm">
             <div className="flex flex-col gap-1">
