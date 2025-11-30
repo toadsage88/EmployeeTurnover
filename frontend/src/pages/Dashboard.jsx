@@ -40,8 +40,7 @@ function Dashboard() {
     setPrediction(null);
 
     try {
-      const response = await axios.post("https://employee-turnover-backend.onrender.com/predict", formData)
-, formData);
+      const response = await axios.post("https://employee-turnover-backend.onrender.com/predict", formData);
       console.log("✅ Backend Response:", response.data);
       setPrediction(response.data.prediction);
     } catch (error) {
@@ -152,4 +151,5 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
 
