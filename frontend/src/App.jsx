@@ -38,7 +38,7 @@ function Layout() {
         <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2 font-semibold">
             <span className="text-xl">👥</span>
-            <span>Employee Turnover Prediction System</span>
+            <span>Employee Turnover Prediction </span>
           </div>
           <nav className="flex items-center gap-6 text-sm font-medium">
             <NavLink
