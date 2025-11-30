@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+
+const BACKEND_URL = "https://employee-turnover-backend.onrender.com/predict";
 
 function Dashboard() {
   const [formData, setFormData] = useState({
@@ -16,22 +18,12 @@ function Dashboard() {
 
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-
-  // Apply dark mode class to <html>
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -40,120 +32,135 @@ function Dashboard() {
     setPrediction(null);
 
     try {
-      const response = await axios.post(
-        "https://employee-turnover-backend.onrender.com/predict",
-        formData
-      );
-      console.log("✅ Backend Response:", response.data);
+      const response = await axios.post(BACKEND_URL, formData);
       setPrediction(response.data.prediction);
     } catch (error) {
-      console.error("Error:", error);
-      setPrediction("Error connecting to server");
+      console.error(error);
+      setPrediction("Error: Unable to connect to server");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      className={`min-h-screen flex items-center justify-center transition-colors duration-700 bg-gradient-to-br animate-gradient-x ${
-        darkMode
-          ? "from-gray-900 via-purple-900 to-blue-900"
-          : "from-blue-500 via-purple-500 to-pink-500"
-      } p-4`}
-    >
-      {/* 🌗 Theme Toggle Button */}
-      <div className="absolute top-6 right-6 z-10">
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="px-4 py-2 rounded-full bg-white/30 backdrop-blur-md text-white font-medium border border-white/40 hover:bg-white/50 hover:scale-105 transition-all duration-300"
-        >
-          {darkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}
-        </button>
-      </div>
+    <section className="bg-gradient-to-br from-slate-50 to-sky-50 min-h-[calc(100vh-64px)] flex items-center">
+      <div className="max-w-6xl mx-auto px-4 py-10 w-full">
+        <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 md:p-8">
+          <h2 className="text-2xl font-bold text-center mb-2 text-slate-900">
+            Employee Churn Predictor
+          </h2>
+          <p className="text-center text-slate-500 mb-8 text-sm md:text-base">
+            Enter employee details below to predict the likelihood of them
+            leaving the organization. Our AI model analyzes multiple factors to
+            provide accurate predictions.
+          </p>
 
-      {/* 💎 Glass Card */}
-      <div className="max-w-xl w-full bg-white/30 dark:bg-gray-800/40 backdrop-blur-md border border-white/20 dark:border-gray-700/50 shadow-2xl rounded-3xl p-8 text-gray-900 dark:text-gray-100 transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,255,255,0.3)]">
-        <h2 className="text-3xl font-bold text-center mb-6 text-white drop-shadow-lg">
-          Employee Churn Prediction
-        </h2>
-
-        {/* 🧾 Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {[
-            ["satisfaction_level", "Satisfaction Level (0-1)", "number"],
-            ["last_evaluation", "Last Evaluation (0-1)", "number"],
-            ["number_project", "Number of Projects", "number"],
-            ["average_montly_hours", "Average Monthly Hours", "number"],
-            ["time_spend_company", "Years at Company", "number"],
-            ["Work_accident", "Work Accident (0 or 1)", "number"],
-            ["promotion_last_5years", "Promotion in Last 5 Years (0 or 1)", "number"],
-          ].map(([name, label, type]) => (
-            <div key={name}>
-              <label className="block font-medium text-white drop-shadow-md">
-                {label}
-              </label>
-              <input
-                type={type}
-                name={name}
-                step="0.01"
-                value={formData[name]}
-                onChange={handleChange}
-                className="w-full p-2 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700/40 dark:border-gray-600 transition-all duration-300 hover:bg-white/30 dark:hover:bg-gray-700/60"
-                required
-              />
-            </div>
-          ))}
-
-          <div>
-            <label className="block font-medium text-white drop-shadow-md">
-              Department
-            </label>
-            <input
-              type="text"
+          <form
+            onSubmit={handleSubmit}
+            className="grid gap-4 md:grid-cols-2 text-sm"
+          >
+            <InputField
+              label="Satisfaction Level (0–1)"
+              name="satisfaction_level"
+              type="number"
+              step="0.01"
+              value={formData.satisfaction_level}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Last Evaluation (0–1)"
+              name="last_evaluation"
+              type="number"
+              step="0.01"
+              value={formData.last_evaluation}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Number of Projects"
+              name="number_project"
+              type="number"
+              value={formData.number_project}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Average Monthly Hours"
+              name="average_montly_hours"
+              type="number"
+              value={formData.average_montly_hours}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Years at Company"
+              name="time_spend_company"
+              type="number"
+              value={formData.time_spend_company}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Work Accident (0 or 1)"
+              name="Work_accident"
+              type="number"
+              value={formData.Work_accident}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Promotion in Last 5 Years (0 or 1)"
+              name="promotion_last_5years"
+              type="number"
+              value={formData.promotion_last_5years}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Department (e.g. sales, hr, it)"
               name="Departments"
-              placeholder="e.g., sales, hr, IT"
+              type="text"
               value={formData.Departments}
               onChange={handleChange}
-              className="w-full p-2 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700/40 dark:border-gray-600 transition-all duration-300 hover:bg-white/30 dark:hover:bg-gray-700/60"
-              required
             />
-          </div>
-
-          <div>
-            <label className="block font-medium text-white drop-shadow-md">
-              Salary (low, medium, high)
-            </label>
-            <input
-              type="text"
+            <InputField
+              label="Salary (low, medium, high)"
               name="salary"
+              type="text"
               value={formData.salary}
               onChange={handleChange}
-              className="w-full p-2 rounded-lg border border-white/30 bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700/40 dark:border-gray-600 transition-all duration-300 hover:bg-white/30 dark:hover:bg-gray-700/60"
-              required
             />
-          </div>
 
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300 hover:scale-[1.03]"
-            disabled={loading}
-          >
-            {loading ? "Predicting..." : "Predict"}
-          </button>
-        </form>
+            <div className="md:col-span-2 flex justify-center mt-2">
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-8 py-2.5 rounded-full bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 disabled:opacity-60"
+              >
+                {loading ? "Predicting..." : "Predict"}
+              </button>
+            </div>
+          </form>
 
-        {prediction && (
-          <div className="mt-6 text-center text-lg font-semibold text-white">
-            🧠 Prediction: <span className="text-yellow-200">{prediction}</span>
-          </div>
-        )}
+          {prediction && (
+            <div className="mt-6 text-center">
+              <p className="text-sm text-slate-500 mb-1">Prediction Result</p>
+              <p className="text-lg font-semibold text-blue-700">
+                {prediction}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
+    </section>
+  );
+}
+
+function InputField({ label, ...props }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <label className="text-slate-700 text-xs font-medium">{label}</label>
+      <input
+        {...props}
+        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+        required
+      />
     </div>
   );
 }
 
 export default Dashboard;
-
-
-
