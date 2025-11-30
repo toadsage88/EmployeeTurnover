@@ -1,3 +1,4 @@
+// src/pages/Dashboard.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -105,7 +106,7 @@ function Dashboard() {
               name="time_spend_company"
               type="number"
               value={formData.time_spend_company}
-              onChange={handleChange}
+            onChange={handleChange}
             />
             <InputField
               label="Work Accident (0 or 1)"
