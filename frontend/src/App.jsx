@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  HashRouter as Router,   // ⬅️ changed from BrowserRouter
+  HashRouter as Router,   // using HashRouter for Vercel
   Routes,
   Route,
   NavLink,
@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import Login from "./pages/Login";
+import Department from "./pages/Department";   // ⬅️ NEW
 
 function App() {
   return (
@@ -63,6 +64,19 @@ function Layout() {
               </NavLink>
             )}
 
+            {isLoggedIn && (
+              <NavLink
+                to="/department"
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4"
+                    : "hover:opacity-80"
+                }
+              >
+                Department
+              </NavLink>
+            )}
+
             <NavLink
               to="/about"
               className={({ isActive }) =>
@@ -98,6 +112,7 @@ function Layout() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/department" element={<Department />} />  {/* NEW ROUTE */}
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
         </Routes>
