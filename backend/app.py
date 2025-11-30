@@ -148,11 +148,71 @@ def predict():
     result = "Employee will leave" if prediction == 1 else "Employee will stay"
     return jsonify({"prediction": result})
 
+@app.route("/predict-batch", methods=["POST"])
+def predict_batch():
+    data_list = request.get_json() or []
+
+    if not isinstance(data_list, list) or len(data_list) == 0:
+        return jsonify({"error": "Expected a non-empty list of employees"}), 400
+
+    dept_map = {
+        "sales": 0,
+        "hr": 1,
+        "technical": 2,
+        "support": 3,
+        "it": 4,
+        "product_mng": 5,
+        "marketing": 6,
+        "management": 7,
+    }
+    salary_map = {"low": 0, "medium": 1, "high": 2}
+
+    mapped_rows = []
+    for data in data_list:
+        dept_val = dept_map.get(str(data.get("Departments", "sales")).lower(), 0)
+        salary_val = salary_map.get(str(data.get("salary", "medium")).lower(), 1)
+
+        mapped_row = {
+            "satisfaction_level": float(data.get("satisfaction_level", 0)),
+            "last_evaluation": float(data.get("last_evaluation", 0)),
+            "number_project": int(data.get("number_project", 0)),
+            "average_montly_hours": float(data.get("average_montly_hours", 0)),
+            "time_spend_company": int(data.get("time_spend_company", 0)),
+            "Work_accident": int(data.get("Work_accident", 0)),
+            "promotion_last_5years": int(data.get("promotion_last_5years", 0)),
+            "Departments": dept_val,
+            "salary": salary_val,
+        }
+        mapped_rows.append(mapped_row)
+
+    df = pd.DataFrame(mapped_rows)
+    preds = model.predict(df)
+
+    results = [
+        "Employee will leave" if p == 1 else "Employee will stay" for p in preds
+    ]
+
+    # simple summary for department-level view
+    total = len(results)
+    leaving = results.count("Employee will leave")
+    staying = results.count("Employee will stay")
+
+    summary = {
+        "total_employees": total,
+        "will_leave": leaving,
+        "will_stay": staying,
+        "attrition_rate_percent": round((leaving / total) * 100, 2),
+    }
+
+    return jsonify({"summary": summary, "predictions": results})
+
+
 
 if __name__ == "__main__":
     print("✅ Starting Flask server...")
     # For local testing; Render will use gunicorn app:app
     app.run(host="0.0.0.0", port=5000)
+
 
 
 
