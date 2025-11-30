@@ -18,7 +18,7 @@ function Home() {
               AI-Powered HR Analytics
             </p>
             <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 leading-snug mb-4">
-              Employee Retention Through{" "}
+              Employee Turnover Prediction{" "}
               <span className="text-blue-600">AI-Powered Insights</span>
             </h1>
             <p className="text-slate-600 mb-6">
@@ -114,4 +114,5 @@ function FeatureCard({ icon, title, text }) {
 }
 
 export default Home;
+
 
