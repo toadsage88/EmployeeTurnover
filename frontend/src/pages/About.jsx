@@ -5,10 +5,10 @@ function About() {
     <section className="bg-white min-h-[calc(100vh-64px)]">
       <div className="max-w-5xl mx-auto px-4 py-10 lg:py-14">
         <h2 className="text-3xl font-bold text-slate-900 mb-4">
-          About Employee Churn Portal
+          About Employee Turnover Prediction 
         </h2>
         <p className="text-slate-600 mb-4">
-          Employee Churn Portal is a machine-learning powered web application
+          Employee Turnover Prediction  is a machine-learning powered web application
           designed to help organizations understand and predict employee
           turnover. By analyzing multiple HR factors such as satisfaction, work
           hours, evaluations, and salary, the system estimates whether an
@@ -46,3 +46,4 @@ function About() {
 }
 
 export default About;
+
